@@ -21,7 +21,7 @@ export const FONT_SIZES = {
   xl: 24,
   xxl: 28,
   xxxl: 32,
-  xxxxl: 56,
+  xxxxl: 38,
 } as const;
 
 export const THEME_OBJECT: ThemeOptions = {
@@ -61,30 +61,31 @@ export const THEME_OBJECT: ThemeOptions = {
     },
     h2: {
       fontSize: FONT_SIZES.xxxl,
+      fontWeight: FONT_WEIGHT.semibold,
     },
     h3: {
       fontSize: FONT_SIZES.xxl,
-      fontWeight: FONT_WEIGHT.bold,
+      fontWeight: FONT_WEIGHT.semibold,
     },
     h4: {
       fontSize: FONT_SIZES.lg,
-      fontWeight: FONT_WEIGHT.bold,
+      fontWeight: FONT_WEIGHT.semibold,
     },
     h5: {
       fontSize: FONT_SIZES.md,
-      fontWeight: FONT_WEIGHT.bold,
+      fontWeight: FONT_WEIGHT.semibold,
     },
     h6: {
       fontSize: FONT_SIZES.sm,
-      fontWeight: FONT_WEIGHT.bold,
+      fontWeight: FONT_WEIGHT.semibold,
     },
     subtitle1: {
       fontSize: FONT_SIZES.xs,
-      color: '#808080',
+      color: '#fff',
     },
     subtitle2: {
       fontSize: FONT_SIZES.xs,
-      color: '#ACACAC',
+      color: '#8a919e',
     },
     body1: {
       fontSize: FONT_SIZES.sm,
