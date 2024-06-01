@@ -1,5 +1,5 @@
+import * as S from '@app/layouts/MainLayout/MainLayout.styles';
 import { Box, Stack, Typography } from '@mui/material';
-import * as S from './Header.styles';
 
 function Header() {
   return (

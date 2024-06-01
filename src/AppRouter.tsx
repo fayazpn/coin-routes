@@ -2,7 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { ROUTES } from './constants/appConstants';
 import MainLayout from './layouts/MainLayout/MainLayout';
-import ExchangePage from './pages/ExchangePage';
+import ExchangePage from './pages/exchange/ExchangePage';
 
 function AppRouter() {
   return (
