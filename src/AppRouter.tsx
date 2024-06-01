@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+
 import { ROUTES } from './constants/appConstants';
 import ExchangePage from './pages/ExchangePage';
 
@@ -8,7 +9,7 @@ function AppRouter() {
       <Routes>
         <Route path={`${ROUTES.EXCHANGE}/:id`} element={<ExchangePage />} />
 
-        {/* Wild card route to redirect to main page */}
+        {/* Wild card route to redirect to main */}
         <Route
           path="*"
           element={<Navigate to={`${ROUTES.EXCHANGE}/BTC-USD`} />}
