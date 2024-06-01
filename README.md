@@ -4,9 +4,19 @@
 
 This project contains the frontend code for user ui
 
+<hr />
+
+<!-- prettier-ignore-start -->
+[![Build Status][build-badge]][build]
+
+[build-badge]: https://img.shields.io/github/deployments/fayazpn/cr-exchange/production?label=vercel&logoColor=vercel
+[build]: https://github.com/fayazpn/cr-exchange/deployments
+<!-- prettier-ignore-end -->
+
 ### Language:
 
 Typescript
+x
 
 ## Technologies Used
 

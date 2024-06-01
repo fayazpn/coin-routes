@@ -13,5 +13,5 @@ export const StatsCard = styled(Card)(({ $side }: StatsCardProps) => ({
     $side === 'buy'
       ? 'linear-gradient(to bottom, #2194ff78, transparent)'
       : 'linear-gradient(to bottom, #a0a04e, transparent)',
-  // default background color
+  borderRadius: '.8rem',
 }));
