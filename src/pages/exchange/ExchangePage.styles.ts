@@ -2,7 +2,7 @@ import { ORDERS_CONST } from '@app/constants/appConstants';
 import { OrderType } from '@app/types/types';
 import { Card, Paper, styled } from '@mui/material';
 
-export const BestStatsWrapper = styled(Paper)({
+export const TopStatsWrapper = styled(Paper)({
   padding: '1rem 2rem',
   minHeight: '25rem',
 });
