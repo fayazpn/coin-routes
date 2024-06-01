@@ -6,11 +6,13 @@ function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path={`${ROUTES.EXCHANGE}/:id`} element={<ExchangePage />} />
+
+        {/* Wild card route to redirect to main page */}
         <Route
-          path={`${ROUTES.EXCHANGE}`}
+          path="*"
           element={<Navigate to={`${ROUTES.EXCHANGE}/BTC-USD`} />}
         />
-        <Route path={`${ROUTES.EXCHANGE}/:id`} element={<ExchangePage />} />
       </Routes>
     </BrowserRouter>
   );
