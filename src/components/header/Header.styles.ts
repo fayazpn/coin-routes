@@ -1,7 +1,7 @@
 import { Paper, styled } from '@mui/material';
 
-export const PageContainer = styled(Paper)({
+export const TopNavWrapper = styled(Paper)({
   maxWidth: '150rem',
   marginInline: 'auto',
-  minHeight: 'calc(100vh - 8.6rem)',
+  padding: '3rem 2rem',
 });
