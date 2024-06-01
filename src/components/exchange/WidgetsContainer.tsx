@@ -1,11 +1,11 @@
-import BestStats from './BestStats';
-import OrderBook from './OrderBook';
+import OrderBook from './order-book/OrderBook';
 import PairGraph from './PairGraph';
+import TopStats from './top-stats/TopStats';
 
 function WidgetsContainer() {
   return (
     <>
-      <BestStats />
+      <TopStats />
       <PairGraph />
       <OrderBook />
     </>

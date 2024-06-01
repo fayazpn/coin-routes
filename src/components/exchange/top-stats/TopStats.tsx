@@ -1,11 +1,13 @@
+import { ORDERS_CONST } from '@app/constants/appConstants';
 import * as S from '@app/pages/exchange/ExchangePage.styles';
 import { Stack } from '@mui/material';
-import SectionHeader from '../common/SectionHeader';
+
+import SectionHeader from '@app/components/common/SectionHeader';
 import StatsCard from './StatsCard';
 
-function BestStats() {
+function TopStats() {
   return (
-    <S.BestStatsWrapper>
+    <S.TopStatsWrapper>
       <SectionHeader title="Overall Statistics" />
       <Stack
         direction={{ sm: 'column', md: 'row' }}
@@ -17,7 +19,7 @@ function BestStats() {
         gap={{ sm: 2, md: 0 }}
       >
         <StatsCard
-          side="buy"
+          side={ORDERS_CONST.BID}
           price="4367.9999"
           size="0.0123"
           user="itbit"
@@ -31,8 +33,8 @@ function BestStats() {
           pair="BTC-USD"
         />
       </Stack>
-    </S.BestStatsWrapper>
+    </S.TopStatsWrapper>
   );
 }
 
-export default BestStats;
+export default TopStats;

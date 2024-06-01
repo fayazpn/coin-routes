@@ -1,3 +1,4 @@
+import { ORDERS_CONST } from '@app/constants/appConstants';
 import { FONT_WEIGHT } from '@app/constants/themeConstants';
 import * as S from '@app/pages/exchange/ExchangePage.styles';
 import { AllowedPairs, OrderType } from '@app/types/types';
@@ -17,7 +18,7 @@ function StatsCard({ side, user, price, size, pair }: StatsCardProps) {
       <CardContent>
         <Stack direction="row" gap={1} alignItems="center">
           <Typography variant="h5">
-            {side === 'buy' ? 'Best Bid:' : 'Best Ask:'}
+            {side === ORDERS_CONST.BID ? 'Best Bid:' : 'Best Ask:'}
           </Typography>
           <Typography variant="h6" fontWeight={FONT_WEIGHT.medium}>
             {user}
