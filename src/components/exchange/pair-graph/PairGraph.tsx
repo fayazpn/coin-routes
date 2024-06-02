@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { WS_API_URL } from '@app/constants/appConstants';
 import { candlesticksDataFormatter, isAllowedPair } from '@app/utils/utils';
 import { useTheme } from '@mui/material';
