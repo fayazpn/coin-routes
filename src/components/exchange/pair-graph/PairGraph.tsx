@@ -37,7 +37,6 @@ function PairGraph() {
         }
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error('Error parsing message data:', error);
     }
   }, []);
