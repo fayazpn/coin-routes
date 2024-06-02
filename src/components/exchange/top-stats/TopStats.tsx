@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { ORDERS_CONST, WS_API_URL } from '@app/constants/appConstants';
 
 import { isAllowedPair } from '@app/utils/utils';
