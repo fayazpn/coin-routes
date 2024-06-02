@@ -15,6 +15,7 @@ export const StatsCard = styled(Card)(({ $side }: StatsCardProps) => ({
       : 'linear-gradient(to bottom, #a0a04e, transparent)',
   borderRadius: '.8em',
   marginTop: '1em',
+  minWidth: '42rem',
 }));
 
 export const OrderBookWrapper = styled(Paper)({
