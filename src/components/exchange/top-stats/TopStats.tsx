@@ -36,7 +36,7 @@ function TopStats() {
     }
   }, []);
 
-  useWS('ticker', params.id, processMessage);
+  useWS('ticker', processMessage);
 
   if (!params.id || !isAllowedPair(params.id)) return 'No Data';
 

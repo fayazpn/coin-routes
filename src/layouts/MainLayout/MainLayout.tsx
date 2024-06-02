@@ -1,8 +1,10 @@
 import Header from '@app/components/common/Header';
+import useWS from '@app/hooks/useWS';
 import { Outlet } from 'react-router-dom';
 import * as S from './MainLayout.styles';
 
 function MainLayout() {
+  useWS('heartbeats', () => {});
   return (
     <>
       <Header />
