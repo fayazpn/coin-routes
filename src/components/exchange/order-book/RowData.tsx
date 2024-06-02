@@ -4,14 +4,14 @@ import * as S from '@app/pages/exchange/ExchangePage.styles';
 import { OrderType } from '@app/types/types';
 import { Stack, Typography, useTheme } from '@mui/material';
 
-type RowDataType = {
+type RowDataProps = {
   type: OrderType;
   size: string;
   price: string;
   total: string;
 };
 
-function RowData({ type, size, price, total }: RowDataType) {
+function RowData({ type, size, price, total }: RowDataProps) {
   const theme = useTheme();
 
   return (
