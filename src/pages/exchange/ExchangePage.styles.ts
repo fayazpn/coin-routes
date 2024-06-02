@@ -18,6 +18,20 @@ export const StatsCard = styled(Card)(({ $side }: StatsCardProps) => ({
   minWidth: '42rem',
 }));
 
+// ---------------------
+
+export const PairGraphWrapper = styled(Paper)({
+  padding: '1rem 2rem',
+  minHeight: '25rem',
+});
+
+export const PairGraphContainer = styled(Paper)({
+  marginTop: '3rem',
+  border: 0,
+});
+
+// -----------------
+
 export const OrderBookWrapper = styled(Paper)({
   padding: '1em 2em',
   minHeight: '25rem',
