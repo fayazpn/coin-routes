@@ -1,6 +1,7 @@
 import SectionHeader from '@app/components/common/SectionHeader';
 import { ORDERS_CONST } from '@app/constants/appConstants';
 import * as S from '@app/pages/exchange/ExchangePage.styles';
+import RowAggrigate from './RowAggrigate';
 import RowData from './RowData';
 import RowLabel from './RowLabel';
 import Spread from './Spread';
@@ -32,6 +33,7 @@ function OrderBook() {
             key={index}
           />
         ))}
+        <RowAggrigate />
       </S.OrderBookContainer>
     </S.OrderBookWrapper>
   );

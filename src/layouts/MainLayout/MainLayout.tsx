@@ -1,4 +1,4 @@
-import Header from '@app/components/header/Header';
+import Header from '@app/components/common/Header';
 import { Outlet } from 'react-router-dom';
 import * as S from './MainLayout.styles';
 
