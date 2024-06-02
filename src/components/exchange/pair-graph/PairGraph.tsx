@@ -1,22 +1,21 @@
 import { WS_API_URL } from '@app/constants/appConstants';
-import { isAllowedPair } from '@app/utils/utils';
+import { candlesticksDataFormatter, isAllowedPair } from '@app/utils/utils';
 import { useTheme } from '@mui/material';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts/highstock';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import useWebSocket from 'react-use-websocket';
 
 import * as S from '@app/pages/exchange/ExchangePage.styles';
-
-type CandlestickData = [number, number, number, number, number, string];
+import { CandlestickDataType } from '@app/types/types';
 
 function PairGraph() {
   const params = useParams();
-  const [chartData, setChartData] = useState<CandlestickData[]>();
+  const [chartData, setChartData] = useState<CandlestickDataType[]>();
   const theme = useTheme();
 
-  const processMessage = (event: MessageEvent) => {
+  const processMessage = useCallback((event: MessageEvent) => {
     try {
       const data = JSON.parse(event.data);
       if (data.sequence_num) {
@@ -25,16 +24,7 @@ function PairGraph() {
         if (Array.isArray(events) && events.length > 0) {
           const { candles } = events[0];
           if (Array.isArray(candles) && candles.length > 0) {
-            // Convert timestamp to milliseconds since the Unix epoch
-            const timestamp = candles[0].start * 1000;
-            const newDataPoint: CandlestickData = [
-              timestamp,
-              parseFloat(candles[0].open),
-              parseFloat(candles[0].high),
-              parseFloat(candles[0].low),
-              parseFloat(candles[0].close),
-              new Date(timestamp).toLocaleString(),
-            ];
+            const newDataPoint = candlesticksDataFormatter(candles[0]);
 
             setChartData((currentData) => {
               if (currentData) {
@@ -46,9 +36,10 @@ function PairGraph() {
         }
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Error parsing message data:', error);
     }
-  };
+  }, []);
 
   const { sendJsonMessage, getWebSocket } = useWebSocket(WS_API_URL, {
     share: true,
@@ -57,8 +48,6 @@ function PairGraph() {
     shouldReconnect: () => true,
     onMessage: (event: WebSocketEventMap['message']) => processMessage(event),
   });
-
-  console.log(chartData);
 
   useEffect(() => {
     function connect() {
