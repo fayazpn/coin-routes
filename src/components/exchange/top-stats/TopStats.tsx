@@ -17,22 +17,26 @@ function TopStats() {
   });
 
   const processMessage = (event: MessageEvent) => {
-    const data = JSON.parse(event.data);
+    try {
+      const data = JSON.parse(event.data);
 
-    if (data.sequence_num) {
-      const { events } = data;
+      if (data.sequence_num) {
+        const { events } = data;
 
-      if (Array.isArray(events) && events.length > 0) {
-        const { tickers } = events[0];
-        if (Array.isArray(tickers) && tickers.length > 0) {
-          setStatsDetails({
-            bestBid: tickers[0].best_bid as string,
-            bestBidQty: tickers[0].best_bid_quantity as string,
-            bestAsk: tickers[0].best_ask as string,
-            bestAskQty: tickers[0].best_ask_quantity as string,
-          });
+        if (Array.isArray(events) && events.length > 0) {
+          const { tickers } = events[0];
+          if (Array.isArray(tickers) && tickers.length > 0) {
+            setStatsDetails({
+              bestBid: tickers[0].best_bid as string,
+              bestBidQty: tickers[0].best_bid_quantity as string,
+              bestAsk: tickers[0].best_ask as string,
+              bestAskQty: tickers[0].best_ask_quantity as string,
+            });
+          }
         }
       }
+    } catch (error) {
+      console.error('Error parsing message data:', error);
     }
   };
 
@@ -63,7 +67,7 @@ function TopStats() {
     if (params.id && isAllowedPair(params.id)) connect();
   }, [sendJsonMessage, getWebSocket, params.id]);
 
-  if (!params.id || !isAllowedPair(params.id)) return 'no';
+  if (!params.id || !isAllowedPair(params.id)) return 'No Data';
 
   return (
     <>
