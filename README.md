@@ -1,8 +1,8 @@
-**COIN-ROUTES**
+**CR-Exchange**
 
 ### Description:
 
-This project contains the frontend code for user ui
+This project is displaying real-time data pair for crypto currency-fiat currency
 
 <hr />
 
@@ -13,18 +13,35 @@ This project contains the frontend code for user ui
 [build]: https://github.com/fayazpn/cr-exchange/deployments
 <!-- prettier-ignore-end -->
 
-### Language:
+### Note to Reviewers:
 
-Typescript
-x
+Coinbase API:
+
+- _ticker_batch_ api does not have fields **best_bid, best_bidQty, best_ask, best_askQty**, had to improvise and use _ticker_ channel instead
+
+Possible Improvement:
+
+- Folder Structure Refactoring
+- Close WebSocket on window inactive state
+- Improve order book highlighting
+- Error handling
+
+Stretch Goals:
+
+- Aggrigate option
+- Toast for error
+- Pause Feed Button
+- Unit tests for each components
 
 ## Technologies Used
 
 This project is made using the following technologies:
 
-- React.js with Vite Bundler
+- React.js with Vite Bundler & TypeScript
 - Material UI (Component lib)
 - Emotion, used internally by Material UI (Styling)
+- HighCharts for data viz
+- react-use-websocket for WebSocket lifecycles
 
 ## Available Scripts
 
@@ -55,5 +72,6 @@ Clone the repo
 
 ## Docs reference
 
+- [Coinbase API for data feeds](https://docs.cdp.coinbase.com/advanced-trade/docs/welcome/)
 - [Emotion docs can be accessed here](https://styled-components.com/docs)
 - [Material UI docs can be accessed here](https://mui.com/material-ui/getting-started/)

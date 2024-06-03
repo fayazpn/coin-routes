@@ -12,10 +12,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 function PairDropDown() {
   const navigate = useNavigate();
   const params = useParams();
-  const [pairname, setPairname] = useState<string | undefined>(params?.id);
+  const [pairname, setPairname] = useState<string>(params?.id || '');
 
   useEffect(() => {
-    setPairname(params?.id);
+    if (params?.id) {
+      setPairname(params.id);
+    }
   }, [params.id]);
 
   const changeRoute = (event: SelectChangeEvent) => {
@@ -30,7 +32,6 @@ function PairDropDown() {
       <Select
         labelId="currency-pair-label"
         value={pairname}
-        defaultValue={pairname}
         onChange={changeRoute}
       >
         {ALLOWED_PAIRS.map((pair: string) => (

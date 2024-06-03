@@ -38,7 +38,7 @@ function TopStats() {
     }
   }, []);
 
-  useWS('ticker', processMessage, true);
+  useWS('ticker_batch', processMessage, true);
 
   if (!params.id || !isAllowedPair(params.id)) {
     return <NoData />;
