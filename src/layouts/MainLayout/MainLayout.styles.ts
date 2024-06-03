@@ -9,5 +9,5 @@ export const PageContainer = styled(Paper)({
 export const TopNavWrapper = styled(Paper)({
   maxWidth: '150rem',
   marginInline: 'auto',
-  padding: '3rem 2rem',
+  padding: '1rem 2rem',
 });
