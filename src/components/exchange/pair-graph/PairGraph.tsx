@@ -45,7 +45,7 @@ function PairGraph() {
   // Chart configuration options
   const chartOptions: Highcharts.Options = {
     title: {
-      text: 'BTC-USD Chart',
+      text: `${params.id} Chart`,
     },
     chart: {
       backgroundColor: 'rgb(10, 11, 13)',
@@ -65,7 +65,7 @@ function PairGraph() {
     series: [
       {
         type: 'candlestick',
-        name: 'BTC-USD Price',
+        name: `${params.id} Price`,
         data: chartData,
       },
     ],
