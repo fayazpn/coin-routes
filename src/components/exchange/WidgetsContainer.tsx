@@ -1,4 +1,4 @@
-import OrderBook from './order-book/OrderBook';
+import OrderBookContainer from './order-book/OrderBookContainer';
 import PairGraphContainer from './pair-graph/PairGraphContainer';
 import TopStatsContainer from './top-stats/TopStatsContainer';
 
@@ -7,7 +7,7 @@ function WidgetsContainer() {
     <>
       <TopStatsContainer />
       <PairGraphContainer />
-      <OrderBook />
+      <OrderBookContainer />
     </>
   );
 }

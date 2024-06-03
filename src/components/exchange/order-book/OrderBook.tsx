@@ -1,3 +1,5 @@
+import Loader from '@app/components/common/Loader';
+import NoData from '@app/components/common/NoData';
 import SectionHeader from '@app/components/common/SectionHeader';
 import {
   MAX_ORDER_DISPLAY,
@@ -64,9 +66,13 @@ function OrderBook() {
   // seperate channel opening as per coinbase best practices
   useWS('level2', processMessage, false);
 
-  if (!params.id || !isAllowedPair(params.id)) return 'No Data';
+  if (!params.id || !isAllowedPair(params.id)) {
+    return <NoData />;
+  }
 
-  if (!bids.length && !offers.length) return 'Loading';
+  if (!bids.length && !offers.length) {
+    return <Loader />;
+  }
 
   return (
     <S.OrderBookWrapper>

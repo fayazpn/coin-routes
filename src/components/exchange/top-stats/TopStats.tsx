@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 import { ORDERS_CONST } from '@app/constants/appConstants';
 
+import Loader from '@app/components/common/Loader';
+import NoData from '@app/components/common/NoData';
 import useWS from '@app/hooks/useWS';
 import { StatsDetailsType } from '@app/types/types';
 import { isAllowedPair } from '@app/utils/utils';
@@ -38,9 +40,13 @@ function TopStats() {
 
   useWS('ticker', processMessage, true);
 
-  if (!params.id || !isAllowedPair(params.id)) return 'No Data';
+  if (!params.id || !isAllowedPair(params.id)) {
+    return <NoData />;
+  }
 
-  if (!statsDetails) return 'Loading';
+  if (!statsDetails) {
+    return <Loader />;
+  }
 
   return (
     <>

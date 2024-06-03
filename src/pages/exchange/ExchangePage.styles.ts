@@ -1,6 +1,6 @@
 import { ORDERS_CONST } from '@app/constants/appConstants';
 import { OrderType } from '@app/types/types';
-import { Box, Card, Paper, styled } from '@mui/material';
+import { Box, Card, Paper, Stack, styled } from '@mui/material';
 
 export const TopStatsWrapper = styled(Paper)({
   padding: '1rem 2rem',
@@ -64,4 +64,8 @@ export const SpreadContainer = styled(Paper)({
 export const AggrigateContainer = styled(Paper)({
   padding: '0.5em',
   marginTop: '1em',
+});
+
+export const LoadingContainer = styled(Stack)({
+  minHeight: '30rem',
 });

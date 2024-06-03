@@ -6,6 +6,8 @@ import Highcharts from 'highcharts/highstock';
 import { useCallback, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import Loader from '@app/components/common/Loader';
+import NoData from '@app/components/common/NoData';
 import useWS from '@app/hooks/useWS';
 import * as S from '@app/pages/exchange/ExchangePage.styles';
 import { CandlestickDataType } from '@app/types/types';
@@ -45,7 +47,7 @@ function PairGraph() {
   // Chart configuration options
   const chartOptions: Highcharts.Options = {
     title: {
-      text: 'BTC-USD Chart',
+      text: `${params.id} Chart`,
     },
     chart: {
       backgroundColor: 'rgb(10, 11, 13)',
@@ -65,7 +67,7 @@ function PairGraph() {
     series: [
       {
         type: 'candlestick',
-        name: 'BTC-USD Price',
+        name: `${params.id} Price`,
         data: chartData,
       },
     ],
@@ -91,9 +93,13 @@ function PairGraph() {
     },
   };
 
-  if (!params.id || !isAllowedPair(params.id)) return 'No Data';
+  if (!params.id || !isAllowedPair(params.id)) {
+    return <NoData />;
+  }
 
-  if (!chartData) return 'Loading';
+  if (!chartData) {
+    return <Loader />;
+  }
 
   return (
     <S.PairGraphContainer>
