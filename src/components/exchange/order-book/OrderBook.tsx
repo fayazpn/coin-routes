@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
-/* eslint-disable no-lonely-if */
 import SectionHeader from '@app/components/common/SectionHeader';
 import {
   MAX_ORDER_DISPLAY,
@@ -63,6 +61,7 @@ function OrderBook() {
     }
   }, []);
 
+  // seperate channel opening as per coinbase best practices
   useWS('level2', processMessage, false);
 
   if (!params.id || !isAllowedPair(params.id)) return 'No Data';
