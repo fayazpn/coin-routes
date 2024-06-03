@@ -40,7 +40,7 @@ function PairGraph() {
     }
   }, []);
 
-  useWS('candles', processMessage);
+  useWS('candles', processMessage, true);
 
   // Chart configuration options
   const chartOptions: Highcharts.Options = {

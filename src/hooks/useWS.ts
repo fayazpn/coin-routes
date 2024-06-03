@@ -8,11 +8,12 @@ import useWebSocket from 'react-use-websocket';
 
 export default function useWS(
   channelName: string,
-  processFunc: (event: MessageEvent) => void
+  processFunc: (event: MessageEvent) => void,
+  share: boolean
 ) {
   const params = useParams();
   const { sendJsonMessage, getWebSocket } = useWebSocket(WS_API_URL, {
-    share: true,
+    share,
     shouldReconnect: () => true,
     onMessage: (event: WebSocketEventMap['message']) => processFunc(event),
   });
@@ -23,8 +24,7 @@ export default function useWS(
         type: 'unsubscribe',
         channel: channelName,
         product_ids: [params.id],
-        ...((channelName === 'ticker_batch' ||
-          channelName === 'heartbeats') && {
+        ...(channelName === 'heartbeats' && {
           jwt: 'XYZ',
         }),
       };
@@ -35,8 +35,7 @@ export default function useWS(
         type: 'subscribe',
         channel: channelName,
         product_ids: [params.id],
-        ...((channelName === 'ticker_batch' ||
-          channelName === 'heartbeats') && {
+        ...(channelName === 'heartbeats' && {
           jwt: 'XYZ',
         }),
       };

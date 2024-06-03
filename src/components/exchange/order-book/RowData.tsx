@@ -6,10 +6,13 @@ import { Stack, Typography, useTheme } from '@mui/material';
 
 type RowDataProps = {
   type: OrderType;
-  size: string;
-  price: string;
+  size: number;
+  price: number;
   total: string;
 };
+const formatNumber = (num: number, decimals: number) => num.toFixed(decimals);
+export const PRICE_DECIMALS = 2;
+export const SIZE_DECIMALS = 8;
 
 function RowData({ type, size, price, total }: RowDataProps) {
   const theme = useTheme();
@@ -21,15 +24,17 @@ function RowData({ type, size, price, total }: RowDataProps) {
           variant="subtitle1"
           fontSize={FONT_SIZES.xs}
           fontWeight={FONT_WEIGHT.semibold}
+          minWidth="7rem"
         >
-          {size}
+          {formatNumber(size, SIZE_DECIMALS)}
         </Typography>
         <Typography
           variant="subtitle1"
           fontSize={FONT_SIZES.xs}
           fontWeight={FONT_WEIGHT.semibold}
+          minWidth="7rem"
         >
-          {price}
+          {formatNumber(price, PRICE_DECIMALS)}
         </Typography>
         <Typography
           variant="subtitle1"
@@ -40,6 +45,7 @@ function RowData({ type, size, price, total }: RowDataProps) {
               ? theme.palette.success.main
               : theme.palette.error.main
           }
+          minWidth="7rem"
         >
           {total}
         </Typography>
