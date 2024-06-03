@@ -19,7 +19,6 @@ import {
 } from '@app/utils/utils';
 import { useCallback, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import RowAggrigate from './RowAggrigate';
 import RowData from './RowData';
 import RowLabel from './RowLabel';
 import Spread from './Spread';
@@ -103,7 +102,6 @@ function OrderBook() {
             depth={vis}
           />
         ))}
-        <RowAggrigate />
       </S.OrderBookContainer>
     </S.OrderBookWrapper>
   );
