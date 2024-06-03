@@ -38,7 +38,7 @@ export const OrderBookWrapper = styled(Paper)({
 });
 
 export const OrderBookContainer = styled(Box)({
-  maxWidth: '45em',
+  maxWidth: '42em',
   marginTop: '2em',
   marginInline: 'auto',
 });

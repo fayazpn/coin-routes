@@ -1,6 +1,5 @@
 import Loader from '@app/components/common/Loader';
 import NoData from '@app/components/common/NoData';
-import SectionHeader from '@app/components/common/SectionHeader';
 import {
   MAX_ORDER_DISPLAY,
   ORDERS_CONST,
@@ -8,7 +7,6 @@ import {
   SIZE_DECIMALS,
 } from '@app/constants/appConstants';
 import useWS from '@app/hooks/useWS';
-import * as S from '@app/pages/exchange/ExchangePage.styles';
 import { AllowedPairs } from '@app/types/types';
 import {
   applyDeltas,
@@ -74,36 +72,33 @@ function OrderBook() {
   }
 
   return (
-    <S.OrderBookWrapper>
-      <SectionHeader title="Order Book" />
-      <S.OrderBookContainer>
-        <RowLabel />
-        {offers.map(([price, size, rowTotal, vis]) => (
-          <RowData
-            size={formatNumber(size, SIZE_DECIMALS)}
-            price={formatNumber(price, PRICE_DECIMALS)}
-            total={formatNumber(rowTotal || 0, SIZE_DECIMALS)}
-            type={ORDERS_CONST.ASK}
-            key={price} // price as key as it is unique
-            depth={vis}
-          />
-        ))}
-        <Spread
-          currency={extractCurrency(params?.id as AllowedPairs | undefined)}
-          spreadAmnt={getSpreadAmount(bids, offers)}
+    <>
+      <RowLabel />
+      {offers.map(([price, size, rowTotal, vis]) => (
+        <RowData
+          size={formatNumber(size, SIZE_DECIMALS)}
+          price={formatNumber(price, PRICE_DECIMALS)}
+          total={formatNumber(rowTotal || 0, SIZE_DECIMALS)}
+          type={ORDERS_CONST.ASK}
+          key={price} // price as key as it is unique
+          depth={vis}
         />
-        {bids.map(([price, size, rowTotal, vis]) => (
-          <RowData
-            size={formatNumber(size, SIZE_DECIMALS)}
-            price={formatNumber(price, PRICE_DECIMALS)}
-            total={formatNumber(rowTotal || 0, SIZE_DECIMALS)}
-            type={ORDERS_CONST.BID}
-            key={price}
-            depth={vis}
-          />
-        ))}
-      </S.OrderBookContainer>
-    </S.OrderBookWrapper>
+      ))}
+      <Spread
+        currency={extractCurrency(params?.id as AllowedPairs | undefined)}
+        spreadAmnt={getSpreadAmount(bids, offers)}
+      />
+      {bids.map(([price, size, rowTotal, vis]) => (
+        <RowData
+          size={formatNumber(size, SIZE_DECIMALS)}
+          price={formatNumber(price, PRICE_DECIMALS)}
+          total={formatNumber(rowTotal || 0, SIZE_DECIMALS)}
+          type={ORDERS_CONST.BID}
+          key={price}
+          depth={vis}
+        />
+      ))}
+    </>
   );
 }
 
