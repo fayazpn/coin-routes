@@ -1,5 +1,6 @@
 import * as S from '@app/layouts/MainLayout/MainLayout.styles';
 import { Box, Stack, Typography } from '@mui/material';
+import PairDropDown from './PairDropDown';
 
 function Header() {
   return (
@@ -13,7 +14,7 @@ function Header() {
           mx="auto"
         >
           <Typography>CR Exchange</Typography>
-          <Typography>Demo Account</Typography>
+          <PairDropDown />
         </Stack>
       </S.TopNavWrapper>
     </Box>

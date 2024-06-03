@@ -1,7 +1,11 @@
 import { ALLOWED_PAIRS, MAX_ORDER_DISPLAY } from '@app/constants/appConstants';
 import { AllowedPairs, CandlestickDataType } from '@app/types/types';
 
-export const isAllowedPair = (pair: string): pair is AllowedPairs => {
+export const isAllowedPair = (
+  pair: string | undefined
+): pair is AllowedPairs => {
+  if (!pair) return false;
+
   return (ALLOWED_PAIRS as readonly string[]).includes(pair);
 };
 
