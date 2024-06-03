@@ -6,6 +6,7 @@ import Highcharts from 'highcharts/highstock';
 import { useCallback, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import Loader from '@app/components/common/Loader';
 import useWS from '@app/hooks/useWS';
 import * as S from '@app/pages/exchange/ExchangePage.styles';
 import { CandlestickDataType } from '@app/types/types';
@@ -93,7 +94,9 @@ function PairGraph() {
 
   if (!params.id || !isAllowedPair(params.id)) return 'No Data';
 
-  if (!chartData) return 'Loading';
+  if (!chartData) {
+    return <Loader />;
+  }
 
   return (
     <S.PairGraphContainer>

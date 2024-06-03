@@ -1,3 +1,4 @@
+import Loader from '@app/components/common/Loader';
 import SectionHeader from '@app/components/common/SectionHeader';
 import {
   MAX_ORDER_DISPLAY,
@@ -66,7 +67,9 @@ function OrderBook() {
 
   if (!params.id || !isAllowedPair(params.id)) return 'No Data';
 
-  if (!bids.length && !offers.length) return 'Loading';
+  if (!bids.length && !offers.length) {
+    return <Loader />;
+  }
 
   return (
     <S.OrderBookWrapper>
