@@ -1,4 +1,4 @@
-import { ALLOWED_PAIRS, ORDERBOOK_LEVELS } from '@app/constants/appConstants';
+import { ALLOWED_PAIRS, MAX_ORDER_DISPLAY } from '@app/constants/appConstants';
 import { AllowedPairs, CandlestickDataType } from '@app/types/types';
 
 export const isAllowedPair = (pair: string): pair is AllowedPairs => {
@@ -20,28 +20,23 @@ export const candlesticksDataFormatter = (
   ];
 };
 
+// Function applies differences and add total of rows before and adds visual depth percentage
+
 export const removePriceLevel = (
   price: number,
   levels: number[][]
-): number[][] => levels.filter((level) => level[0] !== price);
-
-export const updatePriceLevel = (
-  updatedLevel: number[],
-  levels: number[][]
 ): number[][] => {
-  return levels.map((level) => {
-    if (level[0] === updatedLevel[0]) {
-      // level = updatedLevel;
-      return updatedLevel;
-    }
-    return level;
-  });
+  return levels.filter((level) => level[0] !== price);
 };
 
-export const levelExists = (
-  deltaLevelPrice: number,
-  currentLevels: number[][]
-): boolean => currentLevels.some((level) => level[0] === deltaLevelPrice);
+export const updatePriceLevel = (
+  deltaLevel: number[],
+  levels: number[][]
+): number[][] => {
+  return levels.map((level) =>
+    level[0] === deltaLevel[0] ? deltaLevel : level
+  );
+};
 
 export const addPriceLevel = (
   deltaLevel: number[],
@@ -50,57 +45,46 @@ export const addPriceLevel = (
   return [...levels, deltaLevel];
 };
 
-/** The orders returned by the feed are in the format
- of [price, size][].
- * @param currentLevels Existing price levels - `bids` or `asks`
- * @param orders Update of a price level
- */
-export const applyDeltas = (
-  currentLevels: number[][],
-  orders: number[][]
-): number[][] => {
-  let updatedLevels: number[][] = currentLevels;
+export const levelExists = (price: number, levels: number[][]): boolean => {
+  return levels.some((level) => level[0] === price);
+};
 
-  orders.forEach((deltaLevel) => {
-    const deltaLevelPrice = deltaLevel[0];
-    const deltaLevelSize = deltaLevel[1];
+export const formatNumber = (num: number, decimals: number) =>
+  num.toFixed(decimals);
 
-    // If new size is zero - delete the price level
-    if (deltaLevelSize === 0 && updatedLevels.length > ORDERBOOK_LEVELS) {
-      updatedLevels = removePriceLevel(deltaLevelPrice, updatedLevels);
-    } else {
-      // If the price level exists and the size is not zero, update it
-      // eslint-disable-next-line no-lonely-if
-      if (levelExists(deltaLevelPrice, currentLevels)) {
-        updatedLevels = updatePriceLevel(deltaLevel, updatedLevels);
-      } else if (updatedLevels.length < ORDERBOOK_LEVELS) {
-        // If the price level doesn't exist in the orderbook and there are less than 25 levels, add it
+export const getHighestBid = (bids: number[][]): number => {
+  const prices: number[] = bids.map((bid) => bid[0]);
+  return Math.max(...prices);
+};
 
-        updatedLevels = addPriceLevel(deltaLevel, updatedLevels);
-      }
-    }
-  });
+export const getLowestAsk = (asks: number[][]): number => {
+  const prices: number[] = asks.map((ask) => ask[0]);
+  return Math.min(...prices);
+};
 
-  return updatedLevels;
+export const getSpreadAmount = (bids: number[][], asks: number[][]): number =>
+  Math.abs(getHighestBid(bids) - getLowestAsk(asks));
+
+export const extractCurrency = (pair: AllowedPairs | undefined) => {
+  if (!pair) return '-';
+
+  const parts = pair.split('-');
+  return parts[1];
+};
+export const getMaxTotalSum = (orders: number[][]): number => {
+  const totalSums: number[] = orders.map((order) => order[2]);
+  return Math.max(...totalSums);
 };
 
 export const addTotalSums = (orders: number[][]): number[][] => {
-  const totalSums: number[] = [];
-
-  return orders.map((order: number[], idx) => {
-    const size: number = order[1];
-    if (typeof order[2] !== 'undefined') {
-      return order;
-    }
-    const updatedLevel = [...order];
-    const totalSum: number = idx === 0 ? size : size + totalSums[idx - 1];
-    updatedLevel[2] = totalSum;
-    totalSums.push(totalSum);
-    return updatedLevel;
+  orders.forEach((level, index) => {
+    const totalSizeSum: number =
+      index === 0 ? level[1] : level[1] + orders[index - 1][2];
+    level.push(totalSizeSum);
   });
-};
 
-export const addDepths = (orders: number[][], maxTotal: number): number[][] => {
+  const maxTotal = getMaxTotalSum(orders);
+
   return orders.map((order) => {
     if (typeof order[3] !== 'undefined') {
       return order;
@@ -113,7 +97,40 @@ export const addDepths = (orders: number[][], maxTotal: number): number[][] => {
   });
 };
 
-export const getMaxTotalSum = (orders: number[][]): number => {
-  const totalSums: number[] = orders.map((order) => order[2]);
-  return Math.max.apply(Math, totalSums);
+export const applyDeltas = (
+  currentLevels: number[][],
+  orders: number[][],
+  side: string
+): number[][] => {
+  let updatedLevels = currentLevels;
+
+  orders.forEach((deltaLevel) => {
+    const deltaLevelPrice = deltaLevel[0];
+    const deltaLevelSize = deltaLevel[1];
+
+    // Always remove the price level if size is zero
+    updatedLevels = removePriceLevel(deltaLevelPrice, updatedLevels);
+
+    // Add or update the price level if the size is not zero
+    if (deltaLevelSize !== 0) {
+      if (levelExists(deltaLevelPrice, currentLevels)) {
+        updatedLevels = updatePriceLevel(deltaLevel, updatedLevels);
+      } else if (updatedLevels.length < MAX_ORDER_DISPLAY) {
+        updatedLevels = addPriceLevel(deltaLevel, updatedLevels);
+      }
+    }
+  });
+
+  // Sort bids in descending order and offers in ascending order
+  updatedLevels =
+    side === 'bid'
+      ? updatedLevels.sort((a, b) => b[0] - a[0])
+      : updatedLevels.sort((a, b) => a[0] - b[0]);
+
+  // Calculate the total sum of sizes for each row
+  const updatedLevelsSum = addTotalSums(updatedLevels);
+
+  // Add Visual percentage for highlight component
+
+  return updatedLevelsSum;
 };

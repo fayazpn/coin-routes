@@ -3,22 +3,22 @@ import { FONT_SIZES, FONT_WEIGHT } from '@app/constants/themeConstants';
 import * as S from '@app/pages/exchange/ExchangePage.styles';
 import { OrderType } from '@app/types/types';
 import { Stack, Typography, useTheme } from '@mui/material';
+import SizeHighlight from './SizeHighlight';
 
 type RowDataProps = {
   type: OrderType;
-  size: number;
-  price: number;
+  size: string;
+  price: string;
   total: string;
+  depth: number;
 };
-const formatNumber = (num: number, decimals: number) => num.toFixed(decimals);
-export const PRICE_DECIMALS = 2;
-export const SIZE_DECIMALS = 8;
 
-function RowData({ type, size, price, total }: RowDataProps) {
+function RowData({ type, size, price, total, depth }: RowDataProps) {
   const theme = useTheme();
 
   return (
     <S.RowData>
+      <SizeHighlight depth={depth} orderType={type} />
       <Stack direction="row" justifyContent="space-evenly">
         <Typography
           variant="subtitle1"
@@ -26,7 +26,7 @@ function RowData({ type, size, price, total }: RowDataProps) {
           fontWeight={FONT_WEIGHT.semibold}
           minWidth="7rem"
         >
-          {formatNumber(size, SIZE_DECIMALS)}
+          {size}
         </Typography>
         <Typography
           variant="subtitle1"
@@ -34,7 +34,7 @@ function RowData({ type, size, price, total }: RowDataProps) {
           fontWeight={FONT_WEIGHT.semibold}
           minWidth="7rem"
         >
-          {formatNumber(price, PRICE_DECIMALS)}
+          {price}
         </Typography>
         <Typography
           variant="subtitle1"
