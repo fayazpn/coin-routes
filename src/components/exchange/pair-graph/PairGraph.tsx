@@ -1,13 +1,12 @@
 /* eslint-disable no-console */
-import { WS_API_URL } from '@app/constants/appConstants';
 import { candlesticksDataFormatter, isAllowedPair } from '@app/utils/utils';
 import { useTheme } from '@mui/material';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts/highstock';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import useWebSocket from 'react-use-websocket';
 
+import useWS from '@app/hooks/useWS';
 import * as S from '@app/pages/exchange/ExchangePage.styles';
 import { CandlestickDataType } from '@app/types/types';
 
@@ -41,36 +40,7 @@ function PairGraph() {
     }
   }, []);
 
-  const { sendJsonMessage, getWebSocket } = useWebSocket(WS_API_URL, {
-    share: true,
-    onOpen: () => console.log('WebSocket connection opened.'),
-    onClose: () => console.log('WebSocket connection closed.'),
-    shouldReconnect: () => true,
-    onMessage: (event: WebSocketEventMap['message']) => processMessage(event),
-  });
-
-  useEffect(() => {
-    function connect() {
-      const unSubscribeMessage = {
-        type: 'unsubscribe',
-        channel: 'candles',
-        product_ids: [params.id],
-      };
-      sendJsonMessage(unSubscribeMessage);
-
-      const subscribeMessage = {
-        type: 'subscribe',
-        channel: 'candles',
-        product_ids: [params.id],
-      };
-      sendJsonMessage(subscribeMessage);
-    }
-    if (params.id && isAllowedPair(params.id)) {
-      connect();
-    }
-  }, [sendJsonMessage, getWebSocket, params.id]);
-
-  if (!params.id || !isAllowedPair(params.id)) return 'No Data';
+  useWS('candles', processMessage, true);
 
   // Chart configuration options
   const chartOptions: Highcharts.Options = {
@@ -120,6 +90,10 @@ function PairGraph() {
       },
     },
   };
+
+  if (!params.id || !isAllowedPair(params.id)) return 'No Data';
+
+  if (!chartData) return 'Loading';
 
   return (
     <S.PairGraphContainer>

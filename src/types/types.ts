@@ -12,3 +12,10 @@ export type CandlestickDataType = [
   number,
   string,
 ];
+
+export type StatsDetailsType = {
+  bestBid: string;
+  bestBidQty: string;
+  bestAsk: string;
+  bestAskQty: string;
+};

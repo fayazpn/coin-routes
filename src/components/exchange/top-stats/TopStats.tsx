@@ -1,22 +1,18 @@
 /* eslint-disable no-console */
-import { ORDERS_CONST, WS_API_URL } from '@app/constants/appConstants';
+import { ORDERS_CONST } from '@app/constants/appConstants';
 
+import useWS from '@app/hooks/useWS';
+import { StatsDetailsType } from '@app/types/types';
 import { isAllowedPair } from '@app/utils/utils';
-import { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import useWebSocket from 'react-use-websocket';
 import StatsCard from './StatsCard';
 
 function TopStats() {
   const params = useParams();
-  const [statsDetails, setStatsDetails] = useState({
-    bestBid: '',
-    bestBidQty: '',
-    bestAsk: '',
-    bestAskQty: '',
-  });
+  const [statsDetails, setStatsDetails] = useState<StatsDetailsType>();
 
-  const processMessage = (event: MessageEvent) => {
+  const processMessage = useCallback((event: MessageEvent) => {
     try {
       const data = JSON.parse(event.data);
 
@@ -38,36 +34,13 @@ function TopStats() {
     } catch (error) {
       console.error('Error parsing message data:', error);
     }
-  };
+  }, []);
 
-  const { sendJsonMessage, getWebSocket } = useWebSocket(WS_API_URL, {
-    share: true,
-    onOpen: () => console.log('WebSocket connection opened.'),
-    onClose: () => console.log('WebSocket connection closed.'),
-    shouldReconnect: () => true,
-    onMessage: (event: WebSocketEventMap['message']) => processMessage(event),
-  });
-
-  useEffect(() => {
-    function connect() {
-      const unSubscribeMessage = {
-        type: 'unsubscribe',
-        channel: 'ticker',
-        product_ids: [params.id],
-      };
-      sendJsonMessage(unSubscribeMessage);
-
-      const subscribeMessage = {
-        type: 'subscribe',
-        channel: 'ticker',
-        product_ids: [params.id],
-      };
-      sendJsonMessage(subscribeMessage);
-    }
-    if (params.id && isAllowedPair(params.id)) connect();
-  }, [sendJsonMessage, getWebSocket, params.id]);
+  useWS('ticker', processMessage, true);
 
   if (!params.id || !isAllowedPair(params.id)) return 'No Data';
+
+  if (!statsDetails) return 'Loading';
 
   return (
     <>

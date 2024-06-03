@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import * as S from './MainLayout.styles';
 
 function MainLayout() {
+  // useWS('heartbeats', () => {});
   return (
     <>
       <Header />

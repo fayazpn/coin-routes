@@ -38,7 +38,7 @@ export const OrderBookWrapper = styled(Paper)({
 });
 
 export const OrderBookContainer = styled(Box)({
-  maxWidth: '70em',
+  maxWidth: '45em',
   marginTop: '2em',
   marginInline: 'auto',
 });
@@ -51,7 +51,9 @@ export const RowLabel = styled(Paper)({
 export const RowData = styled(Paper)({
   marginInline: 'auto',
   border: 0,
-  marginBottom: '-.5em',
+  // marginBottom: '-.5em',
+  position: 'relative',
+  zIndex: 2,
 });
 
 export const SpreadContainer = styled(Paper)({
