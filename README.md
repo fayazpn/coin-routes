@@ -2,7 +2,7 @@
 
 ### Description:
 
-This project is displaying real-time data pair for crypto currency-fiat currency
+This project is displaying real-time data pair for crypto currency-fiat currency, [LIVE PREVIEW LINK](https://coin-routes-indol.vercel.app/)
 
 <hr />
 
