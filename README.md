@@ -13,11 +13,8 @@ This project is displaying real-time data pair for crypto currency-fiat currency
 [build]: https://github.com/fayazpn/cr-exchange/deployments
 <!-- prettier-ignore-end -->
 
-### Note to Reviewers:
 
 Coinbase API:
-
-- _ticker_batch_ api does not have fields **best_bid, best_bidQty, best_ask, best_askQty**, had to improvise and use _ticker_ channel instead
 
 Possible Improvement:
 
